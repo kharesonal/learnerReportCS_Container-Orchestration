@@ -1,0 +1,6 @@
+[submodule "learnerReportCS_frontend"]
+	path = learnerReportCS_frontend
+	url = https://github.com/UnpredictablePrashant/learnerReportCS_frontend.git
+[submodule "learnerReportCS_backend"]
+	path = learnerReportCS_backend
+	url = https://github.com/UnpredictablePrashant/learnerReportCS_backend.git
