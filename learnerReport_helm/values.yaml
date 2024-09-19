@@ -1,0 +1,29 @@
+backend:
+  namespace: backendlearner
+  replicas: 1
+  containerPort: 3000
+  image: sonalsrivastava1189/learner_report:backend-0.1
+  secrets:
+    ATLAS_URI: "mongodb+srv://sonal:sonal1189@cluster-sonal.0ktone2.mongodb.net/?retryWrites=true&w=majority&appName=cluster-sonal"
+    HASH_KEY: "thisIsMyHashKey"
+    JWT_SECRET_KEY: "thisIsMyJwtSecretKey"
+  resources:
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+
+frontend:
+  namespace: frontendlearner
+  replicas: 1
+  containerPort: 3000
+  image: sonalsrivastava1189/learner_report:frontend-0.1
+  resources:
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+    requests:
+      memory: "256Mi"
+      cpu: "250m"

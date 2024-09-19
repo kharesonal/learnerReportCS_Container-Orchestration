@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: sonalsrivastava1189/learner_report:backend-0.1
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ATLAS_URI
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: ATLAS_URI
+        - name: HASH_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: HASH_KEY
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: JWT_SECRET_KEY
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
