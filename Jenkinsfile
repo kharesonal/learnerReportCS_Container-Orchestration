@@ -12,7 +12,10 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: "${env.GIT_REPO}"
+                script {
+                    // Checkout code from GitHub repository
+                    git branch: 'main', url: 'https://github.com/kharesonal/learnerReportCS_Container-Orchestration'
+                }
             }
         }
 
