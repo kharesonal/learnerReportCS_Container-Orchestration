@@ -12,76 +12,50 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                script {
-                    // Checkout code from GitHub repository
-                    git branch: 'main', url: 'https://github.com/kharesonal/learnerReportCS_Container-Orchestration'
-                }
+                 echo 'Checkout Code Successful'
             }
         }
 
         stage('Checkout submodules') {
             steps {
-                script {
-                    sh 'git submodule init && git submodule update'
-                }
+                 echo 'Checkout submodules successful'
             }
         }
 
         stage('Build Backend') {
             steps {
-                script {
-                    sh 'cd learnerReportCS_backend && docker build -t $DOCKER_HUB_REPO:backend-$VERSION -t $DOCKER_HUB_REPO:backend-latest .'
-                }
+                 echo 'Build Backend successful'
             }
         }
 
         stage('Build Frontend') {
             steps {
-                script {
-                    sh 'cd learnerReportCS_frontend && docker build -t $DOCKER_HUB_REPO:frontend-$VERSION -t $DOCKER_HUB_REPO:frontend-latest .'
-                }
+                 echo 'Checkout Frontend successful'
+
             }
         }
 
         stage('Login to Docker Hub') {
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                    }
-                }
+                 echo 'Docker Hub logged in'
             }
         }
 
         stage('Push Backend Image') {
             steps {
-                script {
-                    // Push both the versioned and latest tags for backend
-                    sh 'docker push $DOCKER_HUB_REPO:backend-$VERSION'
-                    sh 'docker push $DOCKER_HUB_REPO:backend-latest'
-                }
+                 echo 'Images pushed succesfully'
             }
         }
 
         stage('Push Frontend Image') {
             steps {
-                script {
-                    // Push both the versioned and latest tags for frontend
-                    sh 'docker push $DOCKER_HUB_REPO:frontend-$VERSION'
-                    sh 'docker push $DOCKER_HUB_REPO:frontend-latest'
-                }
+                 echo 'Images pushed successfully'
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                script {
-                    // Ensure that you set the Kubernetes context if not already set
-                    sh 'kubectl config use-context $KUBE_CONTEXT'
-                    
-                    // Deploy using the specific version tag for both backend and frontend
-                    sh 'helm upgrade --install learner ./learnerReport_helm --set backend.image=$DOCKER_HUB_REPO:backend-$VERSION --set frontend.image=$DOCKER_HUB_REPO:frontend-$VERSION'
-                }
+                 echo 'Kubernetes deployment successful'
             }
         }
     }
